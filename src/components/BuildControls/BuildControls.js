@@ -18,8 +18,8 @@ const buildControls = props => (
       <BuildControl
         key={el.label + index}
         label={el.label}
-        ingredientAdded={props.ingredientAdded.bind(this, el.type)}
-        ingredientRemoved={props.ingredientRemoved.bind(this, el.type)}
+        ingredientAdded={props.ingredientAdded.bind(null, el.type)}
+        ingredientRemoved={props.ingredientRemoved.bind(null, el.type)}
         disabled={props.disabledInfo[el.type]} />
     ))}
     <button 
