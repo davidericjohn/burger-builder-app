@@ -1,3 +1,19 @@
+This is a demo project I built using React JS while learning through an online course in Udemy.
+
+The Burger Builder application allows you to customize your burger and process the order.
+It is a simple application built mainly with the below libraries and Firebase as its backend. 
+
+- react
+- react-router-dom
+- axios
+- redux
+- react-redux
+
+
+Credit to Maximilian Schwarzmüller - author of the online course.
+
+############################################################################################################################################################################ 
+
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
 Below you will find some information on how to perform common tasks.<br>
