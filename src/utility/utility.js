@@ -5,3 +5,10 @@ export const convertObjRsToArray = rs => {
 
   return result;
 }
+
+export const updateObject = (oldState, updateProperties) => {
+  return {
+    ...oldState,
+    ...updateProperties
+  };
+}

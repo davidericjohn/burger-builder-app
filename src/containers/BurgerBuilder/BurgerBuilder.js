@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import Aux from '../../hoc/Auxiliary/Auxiliary';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
-import { addIngredient, removeIngredient, getIngredients } from '../../store/actions/actionCreators';
+import { addIngredient, removeIngredient, getIngredients, purchaseInit } from '../../store/actions/actionCreators';
 
 import Burger from '../../components/Burger/Burger';
 import BuildControls from '../../components/BuildControls/BuildControls';
@@ -47,34 +47,7 @@ class BurgerBuilder extends Component {
   }
 
   continuePurchasingHandler = () => {
-    // alert("Purchasing Continued!");
-    // this.setState({ loading: true });
-    // const order = {
-    //   ingredients: this.state.ingredients,
-    //   price: this.state.totalPrice,
-    //   customer: {
-    //     name: 'Eric',
-    //     address: {
-    //       street: '123 street',
-    //       zipCode: '2016',
-    //       country: 'New Zealand',
-    //     },
-    //     email: 'test@gmail.com',
-    //   },
-    //   deliveryMethod: 'fastest',
-    // };
-
-    // axios.post('/orders.json', order)
-    //   .then(response => {
-    //     // console.log(response);
-    //     this.setState({ loading: false, purchasing: false });
-    //   })
-    //   .catch(error => {
-    //     // console.log(error);
-    //     this.setState({ loading: false, purchasing: false });
-    //   });
-
-    this.setState({ purchasing: false });
+    this.props.onPurchaseInit();
     this.props.history.push("/checkout");
   }
 
@@ -124,9 +97,9 @@ class BurgerBuilder extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
-    hasError: state.hasError,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    hasError: state.burgerBuilder.hasError,
   }
 }
 
@@ -134,7 +107,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: name => dispatch(addIngredient(name)),
     onIngredientRemoved: name => dispatch(removeIngredient(name)),
-    onIngredientsFetch: () => { dispatch(getIngredients()) }
+    onIngredientsFetch: () => dispatch(getIngredients()),
+    onPurchaseInit: () => dispatch(purchaseInit()),
   }
 }
 

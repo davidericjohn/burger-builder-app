@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
+import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
+import { purchaseBurger } from '../../../store/actions/actionCreators';
+
 import classes from './ContactData.css';
 import Button from '../../../components/UI/Button/Button';
 import Input from '../../../components/UI/Input/Input';
@@ -118,7 +121,7 @@ class ContactData extends Component {
       isValid = value.length <= rules.max && isValid
 
     if (rules.email) {
-      const pattern = new RegExp('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$');
+      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
       isValid = pattern.test(value) && isValid
     }
 
@@ -152,8 +155,6 @@ class ContactData extends Component {
 
   orderHandler = (e) => {
     e.preventDefault();
-    this.setState({ loading: true });
-
     // serializing postData
     const formData = {};
     for (const el in this.state.orderForm)
@@ -165,13 +166,7 @@ class ContactData extends Component {
       orderData: formData,
     };
 
-    axios.post('/orders.json', order)
-      .then(response => {
-        this.props.history.replace('/');
-      })
-      .catch(error => {
-        this.setState({ loading: false });
-      });
+    this.props.onOrderBurger(order);
   }
 
   render() {
@@ -202,7 +197,7 @@ class ContactData extends Component {
         </form>
       </div>
     );
-    if (this.state.loading)
+    if (this.props.loading)
       contactDataForm = <Spinner />
 
     return (
@@ -215,8 +210,16 @@ class ContactData extends Component {
 
 const mapStateToProps = state => {
   return {
-    ingredients: state.ingredients,
-    totalPrice: state.totalPrice,
+    ingredients: state.burgerBuilder.ingredients,
+    totalPrice: state.burgerBuilder.totalPrice,
+    loading: state.order.loading,
   }
-}
-export default connect(mapStateToProps)(ContactData);
+};
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onOrderBurger: orderData => dispatch(purchaseBurger(orderData)),
+  }
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(ContactData, axios));
