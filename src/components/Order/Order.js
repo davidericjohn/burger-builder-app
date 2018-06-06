@@ -27,9 +27,9 @@ const order = props => {
       <div><label>Email: </label> {orderData.email}</div>
       <hr />
       <div><label>Date Ordered: </label> {order.orderDate}</div>
-      <div><label>Date Delivered: </label> {order.deliveryDate}</div>
+      <div><label>Order Status: </label> {order.orderStatus}</div>
       <div><label>Delivery Method: </label> {orderData.deliveryMethod}</div>
-      <div><label>Delivery Status: </label> {orderData.deliveryStatus}</div>
+      <div><label>Date Delivered: </label> {order.deliveryDate}</div>
       <div><label>Price: </label> NZD {order.price.toFixed(2)}</div>
       <div style={{ width: '100%' }}><label>Ingredients: </label>
         <ul className={classes.Ingredients}>

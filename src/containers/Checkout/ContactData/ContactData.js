@@ -173,9 +173,12 @@ class ContactData extends Component {
     for (const el in this.state.orderForm)
       formData[el] = this.state.orderForm[el].value;
 
+    // provide a way to override/update serialization in the FormComponent 
+    // to provide flexibility when adding data such as the orderDate & orderStatus
     const order = {
       ingredients: this.props.ingredients,
-      orderDate: new Date(), // provide a way to override/update serialization in FormComponent
+      orderDate: new Date(),
+      orderStatus: 'Processing',
       price: this.props.totalPrice,
       orderData: formData,
     };
