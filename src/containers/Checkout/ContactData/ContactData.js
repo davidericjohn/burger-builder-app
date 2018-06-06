@@ -40,6 +40,19 @@ class ContactData extends Component {
         valid: false,
         touched: false,
       },
+      city: {
+        elementType: 'input',
+        elementConfig: {
+          type: 'text',
+          placeholder: 'City',
+        },
+        value: '',
+        validation: {
+          required: true
+        },
+        valid: false,
+        touched: false,
+      },
       zipCode: {
         elementType: 'input',
         elementConfig: {
@@ -48,18 +61,18 @@ class ContactData extends Component {
         },
         value: '',
         validation: {
-          required: true,
+          required: false,
           min: 4,
           max: 5,
         },
-        valid: false,
+        valid: true, // handle the default value based on required property; create a FormComponent
         touched: false,
       },
-      country: {
+      contactNumber: {
         elementType: 'input',
         elementConfig: {
           type: 'text',
-          placeholder: 'Country',
+          placeholder: 'Contact Number',
         },
         value: '',
         validation: {
@@ -76,10 +89,10 @@ class ContactData extends Component {
         },
         value: '',
         validation: {
-          required: true,
+          required: false,
           email: true
         },
-        valid: false,
+        valid: true, // handle the default value based on required property; create a FormComponent
         touched: false,
       },
       deliveryMethod: {
@@ -114,13 +127,13 @@ class ContactData extends Component {
     if (rules.required)
       isValid = value.trim() !== '' && isValid;
 
-    if (rules.min)
+    if (value && rules.min)
       isValid = value.length >= rules.min && isValid
 
     if (rules.max)
       isValid = value.length <= rules.max && isValid
 
-    if (rules.email) {
+    if (value && rules.email) {
       const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
       isValid = pattern.test(value) && isValid
     }
@@ -162,6 +175,7 @@ class ContactData extends Component {
 
     const order = {
       ingredients: this.props.ingredients,
+      orderDate: new Date(), // provide a way to override/update serialization in FormComponent
       price: this.props.totalPrice,
       orderData: formData,
     };
@@ -180,7 +194,7 @@ class ContactData extends Component {
 
     let contactDataForm = (
       <div className={classes.ContactData}>
-        <h4>Enter your Contact Data</h4>
+        <h4>Enter Delivery Details</h4>
         <form onSubmit={this.orderHandler}>
           {formElements.map(el => {
             return <Input

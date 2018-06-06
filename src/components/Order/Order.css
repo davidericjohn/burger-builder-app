@@ -7,10 +7,29 @@
   box-sizing: border-box;
 }
 
+.Order div {
+  width: 100%;
+}
+
+.Order label {
+  font-weight: bold;
+}
+
 .Ingredients {
-  text-transform: capitalize;
-  display: inline-block;
-  margin: 0 8px;
-  border: 1px solid #ccc;
-  padding: 5px;
+  margin: 0;
+  padding: 0;
+  list-style: square;
+  display: flex;
+  flex-flow: column;
+}
+
+.Ingredient {
+  margin-left: 30px;
+}
+
+@media (min-width: 500px) {
+  .Order div {
+    display: inline-block;
+    width: 50%;
+  }
 }
