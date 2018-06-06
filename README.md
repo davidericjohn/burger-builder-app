@@ -5,6 +5,8 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 <h2>Description</h2>
 
+The web application is available at: https://api-project-146025294016.firebaseapp.com/
+
 This is a demo project I built using React and Redux while learning through an online course in Udemy.
 
 The Burger Builder application allows you to customize your burger and process the order.
