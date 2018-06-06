@@ -16,7 +16,7 @@ const purchaseOrderSuccess = (state) => {
 }
 
 const updatePurchasedState = (state, isPurchased) => {
-  return updateObject(state, { loading: isPurchased });
+  return updateObject(state, { purchased: isPurchased });
 }
 
 const getOrders = (state, action) => {
