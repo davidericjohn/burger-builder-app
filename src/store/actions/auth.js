@@ -5,23 +5,37 @@ import axios from 'axios';
 const authStart = () => {
   return {
     type: actionTypes.AUTH_START
-  }
+  };
 }
 
-const authSuccess = (token, userId) => {
+const authSuccess = (token, userId, expiresIn) => {
   return {
     type: actionTypes.AUTH_SUCCESS,
     token: token,
     userId: userId,
-  }
+    expiresIn: expiresIn, // TODO: handle timeout in the reducer as well as clearing timeout when necessary.
+  };
 }
 
 const authFail = error => {
   return {
     type: actionTypes.AUTH_FAIL,
     error: error,
-  }
+  };
 }
+
+const authLogout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT,
+  };
+};
+
+export const logout = () => {
+  return dispatch => {
+    console.log("dispatching action");
+    dispatch(authLogout());
+  };
+};
 
 export const auth = (username, password, isSignUp) => {
   return dispatch => {
@@ -38,10 +52,9 @@ export const auth = (username, password, isSignUp) => {
     }
     axios.post(url, postData)
       .then(response => {
-        dispatch(authSuccess(response.data.idToken, response.data.localId));
+        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.expiresIn));
       })
       .catch(error => {
-        console.log(error);
         dispatch(authFail(error.response.data.error));
       });
   }
