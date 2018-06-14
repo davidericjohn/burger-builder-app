@@ -3,7 +3,7 @@ import axios from 'axios';
 import { connect } from 'react-redux';
 
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
-import { purchaseBurger } from '../../../store/actions/actionCreators';
+import * as actions from '../../../store/actions/actionCreators';
 
 import classes from './ContactData.css';
 import Button from '../../../components/UI/Button/Button';
@@ -235,7 +235,7 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onOrderBurger: orderData => dispatch(purchaseBurger(orderData)),
+    onOrderBurger: orderData => dispatch(actions.purchaseBurger(orderData)),
   }
 };
 

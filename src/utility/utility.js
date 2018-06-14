@@ -12,3 +12,13 @@ export const updateObject = (oldState, updateProperties) => {
     ...updateProperties
   };
 }
+
+export const cleanErrorCode = errorMessage => {
+  const delimiter = ":";
+  let errorCode = errorMessage;
+  if (errorMessage.includes(delimiter)) {
+    errorCode = errorMessage.split(delimiter)[0].trim();
+  }
+
+  return errorCode;
+}
