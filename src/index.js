@@ -14,7 +14,7 @@ import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
 
-axios.defaults.baseURL = 'https://api-project-146025294016.firebaseio.com';
+axios.defaults.baseURL = 'https://burger-builder-davidericjohn.firebaseio.com';
 
 const rootReducer = combineReducers({
   burgerBuilder: burgerBuilderReducer,
