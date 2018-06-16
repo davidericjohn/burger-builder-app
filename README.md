@@ -5,12 +5,12 @@ You can find the most recent version of this guide [here](https://github.com/fac
 
 <h2>Description</h2>
 
-The web application is available at: https://burger-builder-davidericjohn.firebaseapp.com
+Visit the web application at: https://burger-builder-davidericjohn.firebaseapp.com
 
 This is a demo project I built using React and Redux while learning through an online course. Many thanks to Maximilian Schwarzmüller for the knowlege imparted. Follow him at https://www.academind.com/
 
 The Burger Builder application allows you to customize your burger and process the order.
-It is a simple application built mainly with the below libraries and Firebase as its backend. 
+It is a simple application built mainly with the below libraries and Firebase as its backend. I also used Node Package Manager(NPM) to manage this project.
 
 - react
 - react-router-dom
