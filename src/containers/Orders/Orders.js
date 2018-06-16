@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import { connect } from 'react-redux';
 
-import { getOrders } from '../../store/actions/actionCreators';
+import * as actions from '../../store/actions/actionCreators';
 import Order from '../../components/Order/Order';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
@@ -10,7 +10,7 @@ import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 class Orders extends Component {
 
   componentDidMount() {
-    this.props.onGetOrders();
+    this.props.onGetOrders(this.props.token);
   }
 
   render() {
@@ -32,12 +32,13 @@ const mapStateToProps = state => {
   return {
     orders: state.order.orders,
     loading: state.order.loading,
+    token: state.auth.token,
   };
 }
 
 const mapDispatchToProps = dispatch => {
   return {
-    onGetOrders: () => dispatch(getOrders()),
+    onGetOrders: token => dispatch(actions.getOrders(token)),
   };
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withErrorHandler(Orders, axios));

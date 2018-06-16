@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import classes from './Layout.css';
 import Aux from '../../hoc/Auxiliary/Auxiliary';
@@ -21,10 +22,13 @@ class Layout extends Component {
   render() {
     return (
       <Aux>
-        <Toolbar sidebartoggleclicked={this.sideBarToggleHandler} />
+        <Toolbar
+          sidebartoggleclicked={this.sideBarToggleHandler}
+          isAuthenticated={this.props.isAuthenticated} />
         <SideDrawer
           open={this.state.sideBarOpen}
-          backdropclicked={this.sideBarToggleHandler} />
+          backdropclicked={this.sideBarToggleHandler}
+          isAuthenticated={this.props.isAuthenticated} />
         <main className={classes.Content}>
           {this.props.children}
         </main>
@@ -37,4 +41,10 @@ Layout.propTypes = {
   children: PropTypes.node.isRequired
 }
 
-export default Layout;
+const mapStateToProps = state => {
+  return {
+    isAuthenticated: state.auth.token != null,
+  };
+};
+
+export default connect(mapStateToProps)(Layout);
