@@ -30,6 +30,13 @@ const authLogout = () => {
   };
 };
 
+const authRedirectPath = path => {
+  return {
+    type: actionTypes.SET_AUTH_REDIRECT_PATH,
+    path: path,
+  }
+}
+
 export const logout = () => {
   return dispatch => {
     console.log("dispatching action");
@@ -58,5 +65,10 @@ export const auth = (username, password, isSignUp) => {
         dispatch(authFail(error.response.data.error));
       });
   }
+}
+
+export const setAuthRedirectPath = (path) => {
+  console.log("path: " + path);
+  return authRedirectPath(path);
 }
 
