@@ -104,8 +104,10 @@ class Auth extends Component {
       form = <Spinner />;
 
     let error = null;
-    if (this.props.error)
-      error = <p>{messages.auth[cleanErrorCode(this.props.error.message)]}</p>;
+    if (this.props.error) {
+      const errorCode = cleanErrorCode(this.props.error.message);
+      error = <p>{messages.auth[errorCode] ? messages.auth[errorCode] : messages.auth.GENERIC_ERROR}</p>;
+    }
 
     let redirect = null;
     if (this.props.isAuthenticated) {

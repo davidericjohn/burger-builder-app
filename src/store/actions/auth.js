@@ -53,9 +53,9 @@ export const auth = (username, password, isSignUp) => {
       returnSecureToken: true,
     };
 
-    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDq3BWlcGe7suaJ-iRH8SxufTV4Hs78Vs8';
+    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
     if (isSignUp) {
-      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDq3BWlcGe7suaJ-iRH8SxufTV4Hs78Vs8';
+      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
     }
     axios.post(url, postData).then(response => {
         localStorage.setItem('token', response.data.idToken);
@@ -76,7 +76,7 @@ export const authCheckState = () => {
     if (!token) {
       dispatch(logout());
     } else {
-      const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyDq3BWlcGe7suaJ-iRH8SxufTV4Hs78Vs8';
+      const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
       axios.post(url, {
         idToken: token,
       }).then(response => { 
