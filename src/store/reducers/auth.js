@@ -15,6 +15,7 @@ const authStart = state => {
 }
 
 const authSuccess = (state, action) => {
+  console.log(action);
   return updateObject(state, {
     token: action.token,
     userId: action.userId,
@@ -32,7 +33,6 @@ const authLogout = state => {
 }
 
 const setAuthRedirectPath = (state, action) => {
-  console.log("setting path");
   return updateObject(state, { authRedirectPath: action.path });
 }
 

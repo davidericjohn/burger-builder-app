@@ -39,7 +39,7 @@ const authRedirectPath = path => {
 
 export const logout = () => {
   return dispatch => {
-    console.log("dispatching action");
+    localStorage.removeItem('token');
     dispatch(authLogout());
   };
 };
@@ -57,18 +57,34 @@ export const auth = (username, password, isSignUp) => {
     if (isSignUp) {
       url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDq3BWlcGe7suaJ-iRH8SxufTV4Hs78Vs8';
     }
-    axios.post(url, postData)
-      .then(response => {
+    axios.post(url, postData).then(response => {
+        localStorage.setItem('token', response.data.idToken);
         dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.expiresIn));
-      })
-      .catch(error => {
+      }).catch(error => {
         dispatch(authFail(error.response.data.error));
       });
   }
 }
 
 export const setAuthRedirectPath = (path) => {
-  console.log("path: " + path);
   return authRedirectPath(path);
 }
 
+export const authCheckState = () => {
+  return dispatch => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      dispatch(logout());
+    } else {
+      const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyDq3BWlcGe7suaJ-iRH8SxufTV4Hs78Vs8';
+      axios.post(url, {
+        idToken: token,
+      }).then(response => { 
+        const userId = response.data.users[0].localId;
+        dispatch(authSuccess(token, userId));
+      }).catch(error => {
+        dispatch(logout());
+      });
+    }
+  }
+}

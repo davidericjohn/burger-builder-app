@@ -6,10 +6,11 @@ import classes from './Auth.css';
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import { isValid } from '../../utility/utility';
 
 import messages from '../../messages/messages';
 import * as actions from '../../store/actions/actionCreators';
-import { cleanErrorCode } from '../../utility/utility';
+import { cleanErrorCode, updateObject } from '../../utility/utility';
 
 class Auth extends Component {
 
@@ -47,41 +48,20 @@ class Auth extends Component {
   }
 
   componentDidMount() {
-    console.log("componentDidMount");
-    console.log("buildingBurger: " + this.props.buildingBurger);
-    if (!this.props.buildingBurger && this.props.authRedirectPath !== '/'){
-      console.log("reset path");
+    if (!this.props.buildingBurger && this.props.authRedirectPath !== '/') {
       this.props.onSetAuthRedirectPath();
     }
   }
 
-  isValid = (value, rules) => {
-    let isValid = true;
-    if (!rules)
-      return true;
-
-    if (rules.required)
-      isValid = value.trim() !== '' && isValid;
-
-    if (value && rules.email) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid
-    }
-
-    return isValid;
-  }
-
   inputChangeHandler = (event, inputIndentifier) => {
     // creating a deep copy of the given input indentifier
-    const updatedAuthForm = {
-      ...this.state.authForm,
-      [inputIndentifier]: {
-        ...this.state.authForm[inputIndentifier],
+    const updatedAuthForm = updateObject(this.state.authForm, {
+      [inputIndentifier]: updateObject(this.state.authForm[inputIndentifier], {
         value: event.target.value,
-        valid: this.isValid(event.target.value, this.state.authForm[inputIndentifier].validation),
+        valid: isValid(event.target.value, this.state.authForm[inputIndentifier].validation),
         touched: true,
-      }
-    }
+      })
+    });
 
     this.setState({ authForm: updatedAuthForm });
   }
@@ -128,10 +108,7 @@ class Auth extends Component {
       error = <p>{messages.auth[cleanErrorCode(this.props.error.message)]}</p>;
 
     let redirect = null;
-    console.log("checking if authenticated");
     if (this.props.isAuthenticated) {
-      console.log("isAuthenticated");
-      console.log("authRedirectPath: " + this.props.authRedirectPath);
       redirect = <Redirect to={this.props.authRedirectPath} />;
     }
 
@@ -152,7 +129,6 @@ class Auth extends Component {
 }
 
 const mapStateToProps = state => {
-  console.log("state path: " + state.auth.authRedirectPath);
   return {
     loading: state.auth.loading,
     error: state.auth.error,
