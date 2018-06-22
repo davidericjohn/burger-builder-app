@@ -7,7 +7,7 @@ const defaultState = {
   userId: null,
   error: null,
   loading: false,
-  authRedirectPath: "/checkout",
+  authRedirectPath: "/",
 };
 
 const authStart = state => {
@@ -15,12 +15,12 @@ const authStart = state => {
 }
 
 const authSuccess = (state, action) => {
-  return {
+  return updateObject(state, {
     token: action.token,
     userId: action.userId,
     error: null,
     loading: false,
-  };
+  });
 }
 
 const authFail = (state, action) => {
