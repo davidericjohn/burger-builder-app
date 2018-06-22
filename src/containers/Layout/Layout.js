@@ -14,7 +14,7 @@ class Layout extends Component {
   }
 
   sideBarToggleHandler = () => {
-    this.setState((prevState) => {
+    this.setState(prevState => {
       return { sideBarOpen: !prevState.sideBarOpen }
     });
   }

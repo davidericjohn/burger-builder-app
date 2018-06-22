@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 
 import withErrorHandler from '../../../hoc/withErrorHandler/withErrorHandler';
 import * as actions from '../../../store/actions/actionCreators';
+import { isValid } from '../../../utility/utility';
 
 import classes from './ContactData.css';
 import Button from '../../../components/UI/Button/Button';
@@ -119,33 +120,6 @@ class ContactData extends Component {
     loading: false,
   }
 
-  isValid = (value, rules) => {
-    let isValid = true;
-    if (!rules)
-      return true;
-
-    if (rules.required)
-      isValid = value.trim() !== '' && isValid;
-
-    if (value && rules.min)
-      isValid = value.length >= rules.min && isValid
-
-    if (rules.max)
-      isValid = value.length <= rules.max && isValid
-
-    if (value && rules.email) {
-      const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-      isValid = pattern.test(value) && isValid
-    }
-
-    if (rules.isNumeric) {
-      const pattern = /^\d+$/;
-      isValid = pattern.test(value) && isValid
-    }
-
-    return isValid;
-  }
-
   inputChangeHandler = (event, inputIndentifier) => {
     // creating a deep copy of the given input indentifier
     const updatedOrderForm = {
@@ -155,7 +129,7 @@ class ContactData extends Component {
       ...updatedOrderForm[inputIndentifier]
     }
     updatedFormElement.value = event.target.value;
-    updatedFormElement.valid = this.isValid(event.target.value, updatedFormElement.validation);
+    updatedFormElement.valid = isValid(event.target.value, updatedFormElement.validation);
     updatedFormElement.touched = true;
     updatedOrderForm[inputIndentifier] = updatedFormElement;
 
@@ -181,6 +155,7 @@ class ContactData extends Component {
       orderStatus: 'Processing',
       price: this.props.totalPrice,
       orderData: formData,
+      userId: this.props.userId,
     };
 
     this.props.onOrderBurger(order, this.props.token);
@@ -231,6 +206,7 @@ const mapStateToProps = state => {
     totalPrice: state.burgerBuilder.totalPrice,
     loading: state.order.loading,
     token: state.auth.token,
+    userId: state.auth.userId,
   }
 };
 

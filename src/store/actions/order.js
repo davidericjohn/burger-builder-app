@@ -1,4 +1,5 @@
 import axios from 'axios';
+import queryString from 'query-string';
 
 import * as actionTypes from './actionTypes';
 import { convertObjRsToArray } from '../../utility/utility';
@@ -63,10 +64,17 @@ const getOrdersFail = error => {
   }
 }
 
-export const getOrders = token => {
+export const getOrders = (token, userId) => {
   return dispatch => {
     dispatch(getOrdersStart());
-    axios.get('/orders.json?auth=' + token)
+
+    const params = queryString.stringify({
+      auth: token,
+      orderBy: '\"userId\"',
+      equalTo: '\"' + userId + '\"'
+    });
+    
+    axios.get('/orders.json?' + params)
       .then(res => {
         const orders = convertObjRsToArray(res.data);
         dispatch(getOrdersSuccess(orders));
