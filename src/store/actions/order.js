@@ -66,8 +66,7 @@ const getOrdersFail = error => {
 export const getOrders = (token, userId) => {
   return dispatch => {
     dispatch(getOrdersStart());
-
-    const params = '?token=' + token + '&orderBy="userId"&equalTo:"' + userId + '"';
+    const params = '?auth=' + token + '&orderBy="userId"&equalTo:"' + userId;
     axios.get('/orders.json' + params)
       .then(res => {
         const orders = convertObjRsToArray(res.data);
