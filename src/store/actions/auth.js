@@ -1,32 +1,8 @@
 import * as actionTypes from './actionTypes';
 
-import axios from 'axios';
-
-const authStart = () => {
-  return {
-    type: actionTypes.AUTH_START
-  };
-}
-
-const authSuccess = (token, userId, expiresIn) => {
-  return {
-    type: actionTypes.AUTH_SUCCESS,
-    token: token,
-    userId: userId,
-    expiresIn: expiresIn, // TODO: handle timeout in the reducer as well as clearing timeout when necessary.
-  };
-}
-
-const authFail = error => {
-  return {
-    type: actionTypes.AUTH_FAIL,
-    error: error,
-  };
-}
-
 const authLogout = () => {
   return {
-    type: actionTypes.AUTH_LOGOUT,
+    type: actionTypes.AUTH_INITIATE_LOGOUT
   };
 };
 
@@ -37,32 +13,54 @@ const authRedirectPath = path => {
   }
 }
 
+export const authStart = () => {
+  return {
+    type: actionTypes.AUTH_START
+  };
+}
+
+export const authSuccess = (token, userId, expiresIn) => {
+  return {
+    type: actionTypes.AUTH_SUCCESS,
+    token: token,
+    userId: userId,
+    expiresIn: expiresIn, // TODO: handle timeout in the reducer as well as clearing timeout when necessary.
+  };
+}
+
+export const authFail = error => {
+  console.log("action: " + error);
+  return {
+    type: actionTypes.AUTH_FAIL,
+    error: error,
+  };
+}
+
+export const didLogout = () => {
+  return {
+    type: actionTypes.AUTH_LOGOUT
+  };
+};
+
 export const logout = () => {
   return dispatch => {
-    localStorage.removeItem('token');
     dispatch(authLogout());
   };
 };
 
-export const auth = (username, password, isSignUp) => {
-  return dispatch => {
-    dispatch(authStart());
-    const postData = {
-      email: username,
-      password: password,
-      returnSecureToken: true,
-    };
+export const checkAuthTimeout = expiresIn => {
+  return {
+    type: actionTypes.AUTH_CHECK_TIMEOUT,
+    expiresIn: expiresIn
+  };
+};
 
-    let url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
-    if (isSignUp) {
-      url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
-    }
-    axios.post(url, postData).then(response => {
-        localStorage.setItem('token', response.data.idToken);
-        dispatch(authSuccess(response.data.idToken, response.data.localId, response.data.expiresIn));
-      }).catch(error => {
-        dispatch(authFail(error.response.data.error));
-      });
+export const auth = (username, password, isSignUp) => {
+  return {
+    type: actionTypes.AUTH_USER,
+    username: username,
+    password: password,
+    isSignUp: isSignUp
   }
 }
 
@@ -71,20 +69,7 @@ export const setAuthRedirectPath = (path) => {
 }
 
 export const authCheckState = () => {
-  return dispatch => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      dispatch(logout());
-    } else {
-      const url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/getAccountInfo?key=AIzaSyBWtmpDwcAiGTf9ef61l2rv1fUaCBXe8sU';
-      axios.post(url, {
-        idToken: token,
-      }).then(response => { 
-        const userId = response.data.users[0].localId;
-        dispatch(authSuccess(token, userId));
-      }).catch(error => {
-        dispatch(logout());
-      });
-    }
+  return {
+    type: actionTypes.AUTH_CHECK_STATE
   }
 }
