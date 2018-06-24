@@ -3,9 +3,13 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 Below you will find some information on how to perform common tasks.<br>
 You can find the most recent version of this guide [here](https://github.com/facebookincubator/create-react-app/blob/master/packages/react-scripts/template/README.md).
 
-<h2>Description</h2>
+## Description
 
 Visit the web application at: https://burger-builder-davidericjohn.firebaseapp.com
+
+Account:
+email: dummy@test.com
+password: 123456
 
 This is a demo project I built using React and Redux while learning through an online course. Many thanks to Maximilian Schwarzmüller for the knowlege imparted. Follow him at https://www.academind.com/
 
@@ -19,16 +23,14 @@ It is a simple application built mainly with the below libraries and Firebase as
 - redux-thunk
 - react-redux
 
-<h2>What's Next?</h2>
+## What's Next?
 
-<b>Features:</b>
+### Features:
 
-- Implement User Authentication
-- Add more details (date, delivery status) on the Orders section
 - Add form labels
 - Auto populate form based on the user logged in
 
-<b>Enhancements:</b>
+### Enhancements:
 
 - Explore Redux Saga
 - Possibly create my own FormComponent that maintains its own state to encapsulate all form related actions such as building and validating the form or explore with the available third party libraries.
@@ -37,8 +39,6 @@ It is a simple application built mainly with the below libraries and Firebase as
 - Refactor the ingredients data model to include prices
 - Enhance error handling
 - Prop-types validation
-- Add lazy loading
-
 
 ## Table of Contents	
 
