@@ -1,5 +1,12 @@
-import axios from 'axios';
 import * as actionTypes from './actionTypes';
+
+export const getIngredientsSuccess = (ingredients) => {
+  return {
+    type: actionTypes.GET_INGREDIENTS,
+    ingredients: ingredients,
+    hasError: false,
+  }
+}
 
 export const addIngredient = name => {
   return {
@@ -15,28 +22,16 @@ export const removeIngredient = name => {
   }
 }
 
-const getIngredientsActionCreator = (ingredients, errorMsg) => {
-  return {
-    type: actionTypes.GET_INGREDIENTS,
-    ingredients: ingredients,
-    errorMsg: errorMsg,
-  }
-}
-const hasErrorActionCreator = hasError => {
+export const hasErrorActionCreator = hasError => {
   return {
     type: actionTypes.HAS_ERROR,
     hasError: hasError,
   }
 }
+
 export const getIngredients = () => {
-  return (dispatch) => {
-    axios.get('/ingredients.json')
-      .then(response => {
-        dispatch(getIngredientsActionCreator(response.data));
-        dispatch(hasErrorActionCreator(false));
-      }).catch(error => {
-        dispatch(hasErrorActionCreator(true));
-      });
+  return {
+    type: actionTypes.INITIATE_GET_INGREDIENTS
   }
 }
 

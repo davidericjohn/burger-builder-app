@@ -29,7 +29,6 @@ export const authSuccess = (token, userId, expiresIn) => {
 }
 
 export const authFail = error => {
-  console.log("action: " + error);
   return {
     type: actionTypes.AUTH_FAIL,
     error: error,

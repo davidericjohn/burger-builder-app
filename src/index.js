@@ -14,7 +14,7 @@ import registerServiceWorker from './registerServiceWorker';
 import burgerBuilderReducer from './store/reducers/burgerBuilder';
 import orderReducer from './store/reducers/order';
 import authReducer from './store/reducers/auth';
-import { watchAuth } from './store/sagas/rootSaga';
+import { watchAuth, watchBurgerBuilder, watchOrder } from './store/sagas/rootSaga';
 
 axios.defaults.baseURL = 'https://burger-builder-davidericjohn.firebaseio.com';
 
@@ -30,6 +30,8 @@ const composeEnhancers = process.env.NODE_ENV === "development" ? window.__REDUX
 const store = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk, sagaMiddleware)));
 
 sagaMiddleware.run(watchAuth);
+sagaMiddleware.run(watchBurgerBuilder);
+sagaMiddleware.run(watchOrder);
 
 const app = (
   <Provider store={store}>
