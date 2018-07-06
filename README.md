@@ -40,7 +40,6 @@ The Burger Builder application allows you to customize your burger and process t
 - Prop-types validation
 
 
-Credit to the original author: 
-
-Maximilian Schwarzmüller
+Credit to the original author:  
+Maximilian Schwarzmüller  
 https://www.academind.com/
