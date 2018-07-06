@@ -2,9 +2,10 @@
 
 Visit the web application at: https://burger-builder-davidericjohn.firebaseapp.com
 
-Account:  
-email: dummy@test.com  
-password: 123456
+Dummy Account Details:  
+  
+Email: dummy@test.com  
+Password: 123456
 
 
 This is a demo project I built using below technology stack while learning through an online course. 
@@ -12,12 +13,12 @@ Moreover, the project is bootstrapped with create-react-app and makes use of Fir
 
 The Burger Builder application allows you to customize your burger and process the order.
 
--React
--Redux (Saga)
--Webpack 4
--ES6
--CSS Modules
--HTML 5
+-React  
+-Redux (Saga)  
+-Webpack 4  
+-ES6  
+-CSS Modules  
+-HTML 5  
 -NPM
 
 
